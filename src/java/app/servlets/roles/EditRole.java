@@ -71,7 +71,7 @@ public class EditRole extends HttpServlet {
             }
         }
         HttpSession session = request.getSession();
-        session.setAttribute("RC", "You have successfully update the Role.");
+        session.setAttribute("RC", "You have successfully updated the Role.");
         response.sendRedirect("roles");
 
     }

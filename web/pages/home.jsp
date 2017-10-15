@@ -1,118 +1,129 @@
+<%@page import="java.util.List"%>
+<%@page import="app.models.Task"%>
+<%@page import="java.util.Iterator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%--<jsp:include page="common/headerWithMenu.jsp" />--%>
-<%@include file="common/headerWithMenu.jsp" %>
+<%@include file="common/header.jsp" %>
 
-<div id="content" class="span12">
-
-
-    <ul class="breadcrumb">
-        <li>
-            <i class="icon-home"></i>
-            <a href="index.html">Home</a> 
-            <i class="icon-angle-right"></i>
-        </li>
-        <li><a href="#">Dashboard</a></li>
-    </ul>
-
-    <div class="row-fluid">
-
-        <div class="span4 statbox purple" onTablet="span12" onDesktop="span4">
-     
-            <div class="number"><%=request.getAttribute("empCount")%><i class="icon-arrow-up"></i></div>
-            <div class="title">count</div>
-            <div class="footer">
-                <a href="#"> Employees</a>
-            </div>	
-        </div>
-        <div class="span4 statbox green" onTablet="span12" onDesktop="span4">
-            <div class="number"><%=request.getAttribute("roleCount")%><i class="icon-arrow-up"></i></div>
-            <div class="title">count</div>
-            <div class="footer">
-                <a href="#"> Roles</a>
-            </div>
-        </div>
-        <div class="span4 statbox blue noMargin" onTablet="span12" onDesktop="span4">
-            <div class="number"><%=request.getAttribute("taskCount")%><i class="icon-arrow-up"></i></div>
-            <div class="title">count</div>
-            <div class="footer">
-                <a href="#"> Tasks</a>
-            </div>
-        </div>
- 	
-
-    </div>		
-
-  
-
-
-    <div class="row-fluid">
-
-        <div class="widget blue span12" onTablet="span12" onDesktop="span12">
-
-            <h2><span class="glyphicons globe"><i></i></span> Demographics - Tasks</h2>
-
-            <hr>
-
-            <div class="content">
-
-                <div class="verticalChart">
-
-                    <div class="singleBar">
-
-                        <div class="bar">
-
-                            <div class="value">
-                                <span><%=request.getAttribute("lCount")%>%</span>
-                            </div>
-
-                        </div>
-
-                        <div class="title">Low</div>
-
-                    </div>
-
-                    <div class="singleBar">
-
-                        <div class="bar">
-
-                            <div class="value">
-                                <span><%=request.getAttribute("mCount")%>%</span>
-                            </div>
-
-                        </div>
-
-                        <div class="title">Medium</div>
-
-                    </div>
-
-                    <div class="singleBar">
-
-                        <div class="bar">
-
-                            <div class="value">
-                                <span><%=request.getAttribute("hCount")%>%</span>
-                            </div>
-
-                        </div>
-
-                        <div class="title">High</div>
-
-                    </div>
-
-                   	
-
-                    <div class="clearfix"></div>
-
+        <section class="content">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <h2>DASHBOARD</h2>
                 </div>
 
+                <!-- Widgets -->
+                <div class="row clearfix">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="info-box bg-pink hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">group</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Employees</div>
+                                <div class="number count-to" data-from="0" data-to="<%=request.getAttribute("empCount")%>" data-speed="5" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="info-box bg-cyan hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">security</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Roles</div>
+                                <div class="number count-to" data-from="0" data-to="<%=request.getAttribute("roleCount")%>" data-speed="5" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="info-box bg-light-green hover-expand-effect">
+                            <div class="icon">
+                                <i class="material-icons">check_box</i>
+                            </div>
+                            <div class="content">
+                                <div class="text">Tasks</div>
+                                <div class="number count-to" data-from="0" data-to="<%=request.getAttribute("taskCount")%>" data-speed="5" data-fresh-interval="20"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Widgets -->
+
+                <div class="row clearfix">
+                    <!-- Task Info -->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>TASK DETAILS</h2>
+                                <ul class="header-dropdown m-r--5">
+                                    <li class="dropdown">
+                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">more_vert</i>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="javascript:void(0);">Refresh</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover dashboard-task-infos">
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Description</th>
+                                                <th>Employee Name</th>
+                                                <th>Priority</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%Iterator itr;%>
+                                            <% List<Task> data = (List<Task>) request.getAttribute("list");
+
+                                                for (itr = data.iterator(); itr.hasNext();) {
+                                                    Task task = (Task) itr.next();
+                                                    long id = task.getId();
+                                                    String ename = null;
+                                                    if(task.getEmployee() != null){
+                                                         ename = task.getEmployee().getName();
+                                                    }
+
+                                                    String pro = task.getPriority();
+                                            %>
+                                            <tr>
+
+                                                <td><%=task.getId()%> </td>
+                                                <td><%=task.getDescription()%></td>
+                                                <td>
+                                                    <%if(ename == null){%>  
+                                                    <span class="label">Not Assigned</span>
+                                                    <%}else {%>
+                                                            <%=ename%>
+                                                    <%}%>
+
+                                                </td>
+                                                <td>
+                                                    <% if(pro.equals("Low")){%>
+                                                    <span class="label bg-green"><%=pro%></span>
+                                                    <%}%>
+                                                     <% if(pro.equals("Medium")){%>
+                                                    <span class="label bg-orange"><%=pro%></span>
+                                                    <%}%>
+                                                     <% if(pro.equals("High")){%>
+                                                    <span class="label bg-red"><%=pro%></span>
+                                                    <%}%>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Task Info -->
+                </div>
             </div>
-
-        </div><!--/span-->
-
-
-    </div>
-</div>
-
-
-
-<%@include  file="common/footer.html" %>
+        </section>
+    
+    <%@include file="common/footer.jsp" %>

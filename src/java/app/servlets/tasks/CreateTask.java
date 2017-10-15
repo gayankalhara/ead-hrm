@@ -58,7 +58,7 @@ public class CreateTask extends HttpServlet {
 
         Task task = new Task();
         task.setDescription(request.getParameter("description"));
-        task.setProirity(request.getParameter("pro"));
+        task.setPriority(request.getParameter("pro"));
 
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
@@ -84,7 +84,7 @@ public class CreateTask extends HttpServlet {
             }
         }
         HttpSession session = request.getSession();
-        session.setAttribute("TC", "You have successfully create a new Task.");
+        session.setAttribute("TC", "You have successfully created a new Task.");
         response.sendRedirect("tasks");
 
     }

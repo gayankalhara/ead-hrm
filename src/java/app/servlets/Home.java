@@ -6,6 +6,8 @@ import app.models.Task;
 import app.utils.SessionFactoryUtil;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +29,8 @@ public class Home extends HttpServlet {
 
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
+        
+        List<Task> roles = new ArrayList<Task>();
 
         try {
             tx = Hsession.beginTransaction();
@@ -35,17 +39,17 @@ public class Home extends HttpServlet {
             long taskCount = (long) Hsession.createCriteria(Task.class).setProjection(Projections.rowCount()).uniqueResult();
 
             Criteria crit = Hsession.createCriteria(Task.class);
-            crit.add(Restrictions.eq("proirity", "Low"));
+            crit.add(Restrictions.eq("priority", "Low"));
             crit.setProjection(Projections.rowCount());
             long lCount = (long) crit.uniqueResult();
 
             Criteria crit2 = Hsession.createCriteria(Task.class);
-            crit2.add(Restrictions.eq("proirity", "Medium"));
+            crit2.add(Restrictions.eq("priority", "Medium"));
             crit2.setProjection(Projections.rowCount());
             long mCount = (long) crit2.uniqueResult();
 
             Criteria crit3 = Hsession.createCriteria(Task.class);
-            crit3.add(Restrictions.eq("proirity", "High"));
+            crit3.add(Restrictions.eq("priority", "High"));
             crit3.setProjection(Projections.rowCount());
             long hCount = (long) crit3.uniqueResult();
 
@@ -68,7 +72,10 @@ public class Home extends HttpServlet {
                 request.setAttribute("mCount", 0.00);
                 request.setAttribute("hCount", 0.00);
             }
-
+               
+            roles = Hsession.createCriteria(Task.class).list();
+            request.setAttribute("list", roles);
+            
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {

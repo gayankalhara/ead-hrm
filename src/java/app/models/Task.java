@@ -17,14 +17,14 @@ public class Task implements Serializable {
     @ManyToOne
     private Employee employee;
     private String description;
-    private String proirity;
+    private String priority;
 
-    public String getProirity() {
-        return proirity;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setProirity(String proirity) {
-        this.proirity = proirity;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public Employee getEmployee() {
