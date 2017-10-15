@@ -16,7 +16,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @WebServlet(name = "roles", urlPatterns = {"/roles"})
-public class roles extends HttpServlet {
+public class Roles extends HttpServlet {
 
    
 

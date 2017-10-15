@@ -10,27 +10,27 @@
     </welcome-file-list>
     <servlet>
         <servlet-name>login</servlet-name>
-        <servlet-class>app.servlets.login</servlet-class>
+        <servlet-class>app.servlets.Login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>home</servlet-name>
-        <servlet-class>app.servlets.home</servlet-class>
+        <servlet-class>app.servlets.Home</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>logout</servlet-name>
-        <servlet-class>app.servlets.logout</servlet-class>
+        <servlet-class>app.servlets.Logout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>tasks</servlet-name>
-        <servlet-class>app.servlets.tasks.tasks</servlet-class>
+        <servlet-class>app.servlets.tasks.Tasks</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>roles</servlet-name>
-        <servlet-class>app.servlets.roles.roles</servlet-class>
+        <servlet-class>app.servlets.roles.Roles</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>employees</servlet-name>
-        <servlet-class>app.servlets.employees.employees</servlet-class>
+        <servlet-class>app.servlets.employees.Employees</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>createEmployee</servlet-name>
@@ -42,9 +42,8 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>createEmployeeSubmit</servlet-name>
-        <servlet-class>app.servlets.employees.createEmployee</servlet-class>
+        <servlet-class>app.servlets.employees.CreateEmployee</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>createRole</servlet-name>
         <jsp-file>pages/roles/createRole.jsp</jsp-file>
@@ -53,27 +52,24 @@
         <servlet-name>createRole</servlet-name>
         <url-pattern>/createRole</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>createRoleSubmit</servlet-name>
-        <servlet-class>app.servlets.roles.createRole</servlet-class>
+        <servlet-class>app.servlets.roles.CreateRole</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>editRole</servlet-name>
-        <servlet-class>app.servlets.roles.editRole</servlet-class>
+        <servlet-class>app.servlets.roles.EditRole</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>createTask</servlet-name>
-        <servlet-class>app.servlets.tasks.createTask</servlet-class>
+        <servlet-class>app.servlets.tasks.CreateTask</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>editTask</servlet-name>
-        <servlet-class>app.servlets.tasks.editTask</servlet-class>
+        <servlet-class>app.servlets.tasks.EditTask</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>editEmployee</servlet-name>
-        <servlet-class>app.servlets.employees.editEmployee</servlet-class>
+        <servlet-class>app.servlets.employees.EditEmployee</servlet-class>
     </servlet>
-    
-    
 </web-app>

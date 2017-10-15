@@ -1,8 +1,12 @@
-package app.servlets.roles;
+package app.servlets.employees;
 
+import app.models.Employee;
 import app.models.Role;
 import app.utils.SessionFactoryUtil;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,27 +17,20 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-@WebServlet(name = "createRoleSubmit", urlPatterns = {"/createRoleSubmit"})
-public class createRole extends HttpServlet {
+@WebServlet(name = "employees", urlPatterns = {"/employees"})
+public class Employees extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Role role = new Role();
-        role.setTitle(request.getParameter("title"));
-
+        List<Employee> emp = new ArrayList<Employee>();
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
 
         try {
             tx = Hsession.beginTransaction();
-            Hsession.save(role);
+            emp = Hsession.createCriteria(Employee.class).list();
+            request.setAttribute("list", emp);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -42,12 +39,18 @@ public class createRole extends HttpServlet {
                 } catch (HibernateException e1) {
                     System.out.println("Error rolling back transaction");
                 }
+                // throw again the first exception
                 throw e;
             }
         }
-        HttpSession session = request.getSession();
-        session.setAttribute("RC", "You have successfully create a new Role.");
-        response.sendRedirect("roles");
+      
+        request.getRequestDispatcher("./pages/employees/employees.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
     }
 
 }
