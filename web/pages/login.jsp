@@ -1,54 +1,92 @@
+<%
+    if (session.getAttribute("username") != null) {
+        response.sendRedirect("home");
+    }
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="common/headerLogin.jsp" %>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>EAD </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      
+        <!-- Favicon-->
+        <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
 
-<div class="container-fluid-full">
-    <div class="row-fluid">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-        <div class="row-fluid">
-            <div class="login-box">
-                <div class="icons">
+        <!-- Bootstrap Core Css -->
+        <link href="./assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
+        <!-- Waves Effect Css -->
+        <link href="./assets/plugins/node-waves/waves.css" rel="stylesheet" />
+
+        <!-- Animation Css -->
+        <link href="./assets/plugins/animate-css/animate.css" rel="stylesheet" />
+
+        <!-- Custom Css -->
+        <link href="./assets/css/style.css" rel="stylesheet">
+
+    </head>
+
+    <body class="login-page">
+        <div class="login-box">
+            <div class="logo">
+                <a href="javascript:void(0);">EAD <strong>HRM</strong></a>
+                <small>Human Resource Management Application</small>
+            </div>
+            <div class="card">
+                <div class="body">
+                    <form id="sign_in" action="login" method="POST">
+                        <div class="msg">Sign in with your login details</div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                            </span>
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">lock</i>
+                            </span>
+                            <div class="form-line">
+                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 p-t-5">
+                                <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
+                                <label for="rememberme">Remember Me</label>
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-block bg-pink waves-effect" type="submit">SIGN IN</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <h2>Login - Admin</h2>
-                <form class="form-horizontal" action="login" method="post">
-                    <fieldset>
+            </div>
+        </div>
 
-                        <div class="input-prepend" title="Username">
-                            <span class="add-on"><i class="halflings-icon user"></i></span>
-                            <input class="input-large span10" name="username" id="username" type="text" placeholder="type username"/>
-                        </div>
-                        <div class="clearfix"></div>
+        <!-- Jquery Core Js -->
+        <script src="./assets/plugins/jquery/jquery.min.js"></script>
 
-                        <div class="input-prepend" title="Password">
-                            <span class="add-on"><i class="halflings-icon lock"></i></span>
-                            <input class="input-large span10" name="password" id="password" type="password" placeholder="type password"/>
-                        </div>
-                        <div class="clearfix"></div>
+        <!-- Bootstrap Core Js -->
+        <script src="./assets/plugins/bootstrap/js/bootstrap.js"></script>
 
-                        <div class="button-login">	
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                        <div class="clearfix"></div>
+        <!-- Waves Effect Plugin Js -->
+        <script src="./assets/plugins/node-waves/waves.js"></script>
 
-                </form>
-                <%                    if (request.getAttribute("loginError") != null) {
-                %>
-                <div class="alert alert-error">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Try again!</strong>  <%=request.getAttribute("loginError")%>
-                </div>
-                <%
-                    }
-                %>
-                <hr>
+        <!-- Validation Plugin Js -->
+        <script src="./assets/plugins/jquery-validation/jquery.validate.js"></script>
 
-            </div><!--/span-->
+        <!-- Custom Js -->
+        <script src="./assets/js/admin.js"></script>
+    </body>
 
-        </div><!--/row-->
-
-
-    </div><!--/.fluid-container-->
-
-</div><!--/fluid-row-->
-
-<%@include  file="common/footer.html" %>
+</html>

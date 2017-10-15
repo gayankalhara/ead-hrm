@@ -81,7 +81,7 @@ public class EditEmployee extends HttpServlet {
             }
         }
         HttpSession session = request.getSession();
-        session.setAttribute("EC", "You have successfully update the Employee.");
+        session.setAttribute("EC", "You have successfully updated the Employee.");
         response.sendRedirect("employees");
 
     }

@@ -1,50 +1,54 @@
 <%@page import="app.models.Role"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="../common/headerWithMenu.jsp" %>
+<%@include file="../common/header.jsp" %>
+
 <%    Role role = (Role) request.getAttribute("data");
     long id = role.getId();
     String title = role.getTitle();
 %>
-<div id="content" class="span10">
 
-    <ul class="breadcrumb">
-        <li>
-            <i class="icon-home"></i>
-            <a href="index.html">Home</a> 
-            <i class="icon-angle-right"></i>
-        </li>
-        <li><a href="#">Update Role</a></li>
-    </ul>
-
-    <div class="row-fluid sortable">
-        <div class="box span12">
-            <div class="box-header" data-original-title>
-                <h2><i class="halflings-icon white edit"></i><span class="break"></span>Update Role</h2>
-                <div class="box-icon">
-                    <a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
-                </div>
-            </div>
-            <div class="box-content">
-                <form class="form-horizontal" action="editRole" method="post">
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="typeahead">Role Title </label>
-                            <div class="controls">
-                                <input type="text" class="span6 typeahead" id="title" name="title" value="<%=title%>"  required>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Edit Role</h2>
+                                <ul class="header-dropdown m-r--5">
+                                    <li class="dropdown">
+                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">more_vert</i>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="javascript:void(0);">Refresh</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <form action="editRole" method="post">
+                                    <fieldset>
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" id="title" name="title" value="<%=title%>" required>
+                                                <label class="form-label" for="title">Role Title</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <input type="hidden" value="<%=id%>" name="id" >
+                                        
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <a  href="roles" class="btn">Cancel</a>
+                                        </div>
+                                    </fieldset>
+                                </form>
                             </div>
                         </div>
-                        <input type="hidden" value="<%=id%>" name="id" >
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <a  href="roles" class="btn">Cancel</a>
-                        </div>
-                    </fieldset>
-                </form>   
-
-            </div>
-        </div><!--/span-->
-
-    </div><!--/row-->
-</div>
-
-<%@include  file="../common/footer.html" %>
+                    </div>
+                    <!-- #END# Task Info -->
+                </div>
+    </div>
+</section>
+                                               
+<%@include  file="../common/footer.jsp" %>

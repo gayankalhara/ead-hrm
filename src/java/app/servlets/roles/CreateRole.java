@@ -46,7 +46,7 @@ public class CreateRole extends HttpServlet {
             }
         }
         HttpSession session = request.getSession();
-        session.setAttribute("RC", "You have successfully create a new Role.");
+        session.setAttribute("RC", "You have successfully created a new Role.");
         response.sendRedirect("roles");
     }
 

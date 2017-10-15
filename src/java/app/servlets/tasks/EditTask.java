@@ -61,7 +61,7 @@ public class EditTask extends HttpServlet {
             throws ServletException, IOException {
         Task task = new Task();
         task.setDescription(request.getParameter("description"));
-        task.setProirity(request.getParameter("pro"));
+        task.setPriority(request.getParameter("pro"));
         task.setId(Long.parseUnsignedLong(request.getParameter("id")));
         
         Transaction tx = null;
@@ -88,7 +88,7 @@ public class EditTask extends HttpServlet {
             }
         }
         HttpSession session = request.getSession();
-        session.setAttribute("TC", "You have successfully update the Task.");
+        session.setAttribute("TC", "You have successfully updated the Task.");
         response.sendRedirect("tasks");
     }
 

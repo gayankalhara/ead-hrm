@@ -5,86 +5,109 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="../common/headerWithMenu.jsp" %>
+<%@include file="../common/header.jsp" %>
+
 <%    Employee emp = (Employee) request.getAttribute("emp");
 %>
-<div id="content" class="span10">
 
-    <ul class="breadcrumb">
-        <li>
-            <i class="icon-home"></i>
-            <a href="index.html">Home</a> 
-            <i class="icon-angle-right"></i>
-        </li>
-        <li><a href="#">Edit Employee</a></li>
-    </ul>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row clearfix">
+                    <!-- Task Info -->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Add New Employee</h2>
+                                <ul class="header-dropdown m-r--5">
+                                    <li class="dropdown">
+                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">more_vert</i>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="javascript:void(0);">Refresh</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <form action="editEmployee" method="post">
+                                    <fieldset>
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" id="name" name="name" value="<%=emp.getName()%>" required>
+                                                <label class="form-label" for="name">Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control datepicker" id="dob" name="dob" placeholder="Date of Birth" value="<%=emp.getDateOfBirth()%>" required>
+                                            </div>
+                                        </div>
+                                        <%Iterator itr;%>
+                                        <% List<Role> data = (List<Role>) request.getAttribute("list");
+                                        %>
+                                        <div class="form-group">
+                                            <label class="control-label" for="selectError">Role</label>
+                                            <div class="controls">
+                                                <select class="form-control" id="role" name="role" data-rel="chosen" required>
+                                                    <option value="" selected disabled>Select a role from the list...</option>
+                                                    <%
+                                                        for (itr = data.iterator(); itr.hasNext();) {
+                                                            Role role = (Role) itr.next();
+                                                            long id = role.getId();
+                                                            String titile = role.getTitle();
 
-    <div class="row-fluid sortable">
-        <div class="box span12">
-            <div class="box-header" data-original-title>
-                <h2><i class="halflings-icon white edit"></i><span class="break"></span>Edit Employee</h2>
-                <div class="box-icon">
-                    <a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
+                                                            if (emp.getRole().getId() == id) {
+                                                    %>
+                                                    <option value="<%=id%>" selected><%=titile%></option>
+                                                    <%
+                                                    } else {
+                                                    %>
+                                                    <option value="<%=id%>"><%=titile%></option>
+                                                    <%
+                                                        }
+                                                    %>
+
+                                                    <%}%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                                
+                                        <input type="hidden" value="<%=emp.getId()%>" name="id">
+
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <a  href="employees" class="btn">Cancel</a>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- #END# Task Info -->
                 </div>
-            </div>
-            <div class="box-content">
-                <form class="form-horizontal" action="editEmployee" method="post">
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="typeahead">Name </label>
-                            <div class="controls">
-                                <input type="text" class="span6 typeahead" value="<%=emp.getName()%>" id="name" name="name"  required>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="date01">Date of Birth</label>
-                            <div class="controls">
-                                <input type="text" class="input-xlarge datepicker" id="dob" name="dob" value="<%=emp.getDateOfBirth()%>" required>
-                            </div>
-                        </div>
-                        <%Iterator itr;%>
-                        <% List<Role> data = (List<Role>) request.getAttribute("list");
-                        %>
-                        <div class="control-group">
-                            <label class="control-label" for="selectError">Role</label>
-                            <div class="controls">
-                                <select id="role" name="role" data-rel="chosen" required>
-                                    <option value="" selected disabled> -- please select a role -- </option>
-                                    <%
-                                        for (itr = data.iterator(); itr.hasNext();) {
-                                            Role role = (Role) itr.next();
-                                            long id = role.getId();
-                                            String titile = role.getTitle();
+    </div>
+</section>
+                                               
+<%@include  file="../common/footer.jsp" %>
 
-                                            if (emp.getRole().getId() == id) {
-                                    %>
-                                    <option value="<%=id%>" selected><%=titile%></option>
-                                    <%
-                                    } else {
-                                    %>
-                                    <option value="<%=id%>"><%=titile%></option>
-                                    <%
-                                        }
-                                    %>
+<!-- Moment Plugin Js -->
+<script src="./assets/plugins/momentjs/moment.js"></script>
 
-                                    <%}%>
-                                </select>
-                            </div>
-                        </div>
-                        <input type="hidden" value="<%=emp.getId()%>" name="id">
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <a  href="employees" class="btn">Cancel</a>
-                        </div>
-                    </fieldset>
-                </form>   
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+<script src="./assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
-            </div>
-        </div><!--/span-->
+<!-- Select Plugin Js -->
+<script src="./assets/plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
-    </div><!--/row-->
-</div>
-
-
-
-<%@include  file="../common/footer.html" %>
+<script>
+    
+    $(function () {
+        $('.datepicker').bootstrapMaterialDatePicker({
+            format: 'DD/MM/YYYY',
+            clearButton: true,
+            weekStart: 1,
+            time: false
+        });
+    });
+</script>
