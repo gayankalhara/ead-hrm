@@ -36,7 +36,11 @@ First of all clone the repository
 $ git clone https://github.com/gayankalhara/ead-hrm.git
 ```
 
+## Running
+
 Open the project in NetBeans and run it.
+
+A browser windows will open with the URL http://localhost:8080/ead-hrm. Use 'admin' as the User Name and 'admin' as the password to login to the system.
 
 License
 ----
