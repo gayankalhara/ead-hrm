@@ -1,7 +1,7 @@
-package app.servlets.employees;
+package app.servlets.tasks;
 
-import app.models.Employee;
 import app.models.Role;
+import app.models.Task;
 import app.utils.SessionFactoryUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,25 +12,29 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-@WebServlet(name = "employees", urlPatterns = {"/employees"})
-public class employees extends HttpServlet {
+/**
+ *
+ * @author Gayan
+ */
+@WebServlet(name = "tasks", urlPatterns = {"/tasks"})
+public class Tasks extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Employee> emp = new ArrayList<Employee>();
+
+        List<Task> roles = new ArrayList<Task>();
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
 
         try {
             tx = Hsession.beginTransaction();
-            emp = Hsession.createCriteria(Employee.class).list();
-            request.setAttribute("list", emp);
+            roles = Hsession.createCriteria(Task.class).list();
+            request.setAttribute("list", roles);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -39,12 +43,10 @@ public class employees extends HttpServlet {
                 } catch (HibernateException e1) {
                     System.out.println("Error rolling back transaction");
                 }
-                // throw again the first exception
                 throw e;
             }
         }
-      
-        request.getRequestDispatcher("./pages/employees/employees.jsp").forward(request, response);
+        request.getRequestDispatcher("./pages/tasks/tasks.jsp").forward(request, response);
     }
 
     @Override

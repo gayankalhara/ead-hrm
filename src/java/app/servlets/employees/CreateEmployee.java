@@ -1,11 +1,10 @@
-package app.servlets.tasks;
+package app.servlets.employees;
 
 import app.models.Employee;
 import app.models.Role;
-import app.models.Task;
 import app.utils.SessionFactoryUtil;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,29 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-/**
- *
- * @author Gayan
- */
-@WebServlet(name = "createTask", urlPatterns = {"/createTask"})
-public class createTask extends HttpServlet {
+@WebServlet(name = "createEmployeeSubmit", urlPatterns = {"/createEmployeeSubmit"})
+public class CreateEmployee extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        List<Role> role = new ArrayList<Role>();
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
+
         try {
             tx = Hsession.beginTransaction();
-            String hql = "FROM Employee";
-            Query query = Hsession.createQuery(hql);
-            List<Employee> results = query.list();
-            request.setAttribute("list", results);
+            role = Hsession.createCriteria(Role.class).list();
+            request.setAttribute("list", role);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -48,30 +41,27 @@ public class createTask extends HttpServlet {
                 throw e;
             }
         }
-        request.getRequestDispatcher("./pages/tasks/createTask.jsp").forward(request, response);
-
+        request.getRequestDispatcher("./pages/employees/createEmployee.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Task task = new Task();
-        task.setDescription(request.getParameter("description"));
-        task.setProirity(request.getParameter("pro"));
+        Employee emp = new Employee();
+        Role role = new Role();
+        emp.setDateOfBirth(request.getParameter("dob"));
+        emp.setName(request.getParameter("name"));
 
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
 
         try {
             tx = Hsession.beginTransaction();
-            if (!request.getParameter("emp").equalsIgnoreCase("0")) {
-                long id = Long.parseUnsignedLong(request.getParameter("emp"));
-                Employee emp = (Employee) Hsession.get(Employee.class, id);
-                task.setEmployee(emp);
-            }
-
-            Hsession.save(task);
+            long id = Long.parseUnsignedLong(request.getParameter("role"));
+            role = (Role) Hsession.get(Role.class, id);
+            emp.setRole(role);
+            Hsession.save(emp);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -84,9 +74,8 @@ public class createTask extends HttpServlet {
             }
         }
         HttpSession session = request.getSession();
-        session.setAttribute("TC", "You have successfully create a new Task.");
-        response.sendRedirect("tasks");
-
+        session.setAttribute("EC", "You have successfully create a new Employee.");
+        response.sendRedirect("employees");
     }
 
 }

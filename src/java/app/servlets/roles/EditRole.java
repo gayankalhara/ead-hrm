@@ -1,11 +1,8 @@
-package app.servlets.employees;
+package app.servlets.roles;
 
-import app.models.Employee;
 import app.models.Role;
 import app.utils.SessionFactoryUtil;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,20 +13,22 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-@WebServlet(name = "createEmployeeSubmit", urlPatterns = {"/createEmployeeSubmit"})
-public class createEmployee extends HttpServlet {
+@WebServlet(name = "editRole", urlPatterns = {"/editRole"})
+public class EditRole extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Role> role = new ArrayList<Role>();
+
+        long id = Long.parseUnsignedLong(request.getParameter("id"));
+
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
 
         try {
             tx = Hsession.beginTransaction();
-            role = Hsession.createCriteria(Role.class).list();
-            request.setAttribute("list", role);
+            Role role = (Role) Hsession.get(Role.class, id);
+            request.setAttribute("data", role);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -41,27 +40,25 @@ public class createEmployee extends HttpServlet {
                 throw e;
             }
         }
-        request.getRequestDispatcher("./pages/employees/createEmployee.jsp").forward(request, response);
+
+        request.getRequestDispatcher("./pages/roles/editRole.jsp").forward(request, response);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Employee emp = new Employee();
         Role role = new Role();
-        emp.setDateOfBirth(request.getParameter("dob"));
-        emp.setName(request.getParameter("name"));
+        role.setId(Long.parseUnsignedLong(request.getParameter("id")));
+        role.setTitle(request.getParameter("title"));
 
         Transaction tx = null;
         Session Hsession = SessionFactoryUtil.getCurrentSession();
 
         try {
             tx = Hsession.beginTransaction();
-            long id = Long.parseUnsignedLong(request.getParameter("role"));
-            role = (Role) Hsession.get(Role.class, id);
-            emp.setRole(role);
-            Hsession.save(emp);
+            Hsession.update(role);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -74,8 +71,9 @@ public class createEmployee extends HttpServlet {
             }
         }
         HttpSession session = request.getSession();
-        session.setAttribute("EC", "You have successfully create a new Employee.");
-        response.sendRedirect("employees");
+        session.setAttribute("RC", "You have successfully update the Role.");
+        response.sendRedirect("roles");
+
     }
 
 }
