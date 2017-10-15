@@ -36,6 +36,15 @@ First of all clone the repository
 $ git clone https://github.com/gayankalhara/ead-hrm.git
 ```
 
+Create a MySQL Database as 'hrm' and grant permissions for 'root' user.
+
+If your MySQL configuration is different from following details modify ./src/java/hibernate.cfg.xml to match the changes.
+
+**Host:** localhost
+**User Name:** root
+**Password:** root
+**Port:** 3306
+
 ## Running
 
 Open the project in NetBeans and run it.
